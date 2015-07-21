@@ -1,0 +1,55 @@
+<div class="in-container">
+    <div class="row" style="color: white; text-align: center;">
+        <div class="col-sm-offset-3 col-xs-12 col-sm-6">
+            <div ng-controller="modalSearch">
+                <div style="margin: 30px;">
+                    <img style="width: 50%;" src="../../images/logo.png" alt=""/>
+                </div>
+                <div class="row">
+                    <div style="margin-top: 10px;" class="col-md-12 col-lg-12">
+                        <input ng-model="my.userName" id="summonerName" type="text" class="form-control" placeholder="Summoner Name"/></input>
+                    </div>
+                    <div style="margin-top: 10px;" class="col-md-12 col-lg-12">
+                        <select ng-model="my.region" class="form-control">
+                            <option value="">Choose Region</option>
+                            <option  ng-repeat="region in regions">{{region}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <button ng-click="update(my)" style="width: 180px; margin-right: 0px;" type="button" class="btn btn-primary"><i ng-if="showLoader == true" class='fa fa-cog fa-spin'></i> <span class="glyphicon glyphicon-search" aria-hidden="true" ></span> Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style type="text/css">
+    #main-nav, #wide-menu{
+        display: none;
+    }
+    .main-loading-page{
+        background-image: url(http://fc06.deviantart.net/fs37/f/2008/287/8/9/Black_Texture___Ray_by_Ethenyl.jpg);
+    }
+
+    #main {
+        background: #0f1113;
+        position: relative !important;
+         left: 0px;
+         right: 0px;
+        top: 0;
+        bottom: 0;
+        -ms-transition: all .3s ease;
+        -webkit-transition: all .3s ease;
+        -moz-transition: all .3s ease;
+        -o-transition: all .3s ease;
+        transition: all .3s ease;
+        max-height: 100%;
+        overflow-y: auto;
+        min-height: 730px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+</style>

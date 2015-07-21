@@ -1,0 +1,416 @@
+<div class="in-container">
+    <h1>Overview</h1>
+    <div class="row" style="color: white; text-align: center;">
+
+        <!--<div class="col-xs-12">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-body">-->
+
+                    <!--<p>-->
+                        <!--Hello testers, thanks for helping out with the site!. A couple things to note that i've been receiving feedback on.-->
+                        <!--Currently the "Ideals" in the metrics are not that accurate, (particulary the wards per minute). They have no been updated since the new-->
+                        <!--patch and reflect old data. The wards per minute ideal is actually still set as the wards per game, so it's way off. Once I get a few thousand-->
+                        <!--accounts registered in the database I can write a script that will go through and average out those ideals again by each league. But right now I-->
+                        <!--don't have enough data to go off of. Other than that I have actually been going through and fixing lots of bugs. If they're not ones you sent in i'm-->
+                        <!--likely in the middle of fixing stuff other people have sent in. So be patient if i'm not able to respond or address your email right away. I promise I-->
+                        <!--read all of them.-->
+                        <!--<br/><br/>-->
+                        <!--Thanks again for the feedback and for you're willingness to help.-->
+                    <!--</p>-->
+
+                <!--</div>&lt;!&ndash;/.panel-body&ndash;&gt;-->
+            <!--</div>&lt;!&ndash;/.panel&ndash;&gt;-->
+        <!--</div>-->
+
+        <div ng-controller="metricsChampionController" class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="panel panel-default">
+                <h1 ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                <div class="panel-body">
+                    <p class="muted-text-color">Per Role Metrics</p>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="nav nav-pills nav-justified">
+                                <li ng-show="data.TOP"                id="topTab" role="presentation" class="active tabSelect"><a>TOP</a></li>
+                                <li ng-show="data.JUNGLE"             id="jungleTab" role="presentation" class="tabSelect"><a >JUNGLE</a></li>
+                                <li ng-show="data.MIDDLE"             id="midTab" role="presentation" class="tabSelect"><a >MID</a></li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY"   id="adcTab" role="presentation" class="tabSelect"><a >ADC</a></li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT" id="supportTab" role="presentation" class="tabSelect"><a >SUPPORT</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-show="data.TOP" id="toprole" class="panel panel-default table-panel tableMetrics">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.TOP.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.top.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.TOP.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.top.avgWardsplaced}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.TOP.goldPerMinDeltas.tenToTwenty + data.TOP.goldPerMinDeltas.thirtyToEnd + data.TOP.goldPerMinDeltas.twentyToThirty + data.TOP.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.top.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.TOP.xpPerMinDeltas.tenToTwenty + data.TOP.xpPerMinDeltas.thirtyToEnd + data.TOP.xpPerMinDeltas.twentyToThirty + data.TOP.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.top.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.TOP.stats.kills + data.TOP.stats.assists) / data.TOP.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.TOP.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.TOP.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.MIDDLE" style="display: none;" id="midrole" class="panel panel-default table-panel tableMetrics">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.MIDDLE.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.mid.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.MIDDLE.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.mid.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.MIDDLE.goldPerMinDeltas.tenToTwenty + data.MIDDLE.goldPerMinDeltas.thirtyToEnd + data.MIDDLE.goldPerMinDeltas.twentyToThirty + data.MIDDLE.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.mid.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.MIDDLE.xpPerMinDeltas.tenToTwenty + data.MIDDLE.xpPerMinDeltas.thirtyToEnd + data.MIDDLE.xpPerMinDeltas.twentyToThirty + data.MIDDLE.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.mid.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.MIDDLE.stats.kills + data.MIDDLE.stats.assists) / data.MIDDLE.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.MIDDLE.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.MIDDLE.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.JUNGLE" style="display: none;" id="junglerole" class="panel panel-default table-panel tableMetrics">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.JUNGLE.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.jungle.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.JUNGLE.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.jungle.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.JUNGLE.goldPerMinDeltas.tenToTwenty + data.JUNGLE.goldPerMinDeltas.thirtyToEnd + data.JUNGLE.goldPerMinDeltas.twentyToThirty + data.JUNGLE.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.jungle.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.JUNGLE.xpPerMinDeltas.tenToTwenty + data.JUNGLE.xpPerMinDeltas.thirtyToEnd + data.JUNGLE.xpPerMinDeltas.twentyToThirty + data.JUNGLE.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.jungle.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.JUNGLE.stats.kills + data.JUNGLE.stats.assists) / data.JUNGLE.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.JUNGLE.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.JUNGLE.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.BOTTOM.DUO_CARRY" style="display: none;" id="adcrole" class="panel panel-default table-panel tableMetrics">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.adc.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.adc.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_CARRY.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.adc.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_CARRY.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.adc.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.BOTTOM.DUO_CARRY.stats.kills + data.BOTTOM.DUO_CARRY.stats.assists) / data.BOTTOM.DUO_CARRY.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.BOTTOM.DUO_SUPPORT" style="display: none;" id="supportrole" class="panel panel-default table-panel tableMetrics">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.support.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.support.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.support.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.support.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.BOTTOM.DUO_SUPPORT.stats.kills + data.BOTTOM.DUO_SUPPORT.stats.assists) / data.BOTTOM.DUO_SUPPORT.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                </div><!--/.panel-body-->
+            </div><!--/.panel-->
+        </div><!--/.col-xs-12-->
+        <div ng-controller="favoriteChampionController" class="col-xs-12  col-sm-6 col-md-6 col-lg-3">
+            <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+            <div ng-show="data"  class="thumbnail">
+                <img ng-alt="{{data.name}}" ng-src="images/championsplash/{{data.name}}.jpg" alt="...">
+                <div class="caption">
+                    <h3 style="font-weight: 300 !important; color: #dfe0e6;">Favorite Champion</h3>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{(data.stats.totalSessionsWon / data.stats.totalSessionsPlayed) * 100 | number:0}}%;">
+                            <div ng-if="data.stats.totalSessionsWon > 0">
+                                Wins: {{(data.stats.totalSessionsWon / data.stats.totalSessionsPlayed) * 100 | number:0}}%
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 5px;" class="muted-text-color">
+                        {{data.name}} - Total: {{data.stats.totalSessionsPlayed}} Won: {{data.stats.totalSessionsWon}} Lost: {{data.stats.totalSessionsLost}}
+                    </p>
+                    <div style="margin-bottom: 15px;" class="text-center">
+                        <span class="label label-default">CS: {{data.stats.totalMinionKills / data.stats.totalSessionsPlayed | number:0}}</span>
+                        <span class="label label-default">KDA: {{(data.stats.totalAssists + data.stats.totalChampionKills) / data.stats.totalDeathsPerSession | number:2}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+            <div ng-controller="smallBarController" class="panel panel-default">
+                <div class="panel-body">
+                    <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                    <p class="muted-text-color">Champion KDA</p>
+                    <canvas id="bar" class="chart chart-bar" data="data" colours="colours" series="series" labels="labels"></canvas>
+                    </canvas>
+                </div>
+            </div>
+            <div ng-controller="LineController" class="panel panel-default">
+                <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                <div class="panel-body">
+                    <p class="muted-text-color">Last 7 games Kills & deaths</p>
+                    <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series">
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row" style="color: white; text-align: center;">
+        <div ng-controller="BarController"  class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                    <p class="muted-text-color">Champion Performance</p>
+                    <div class="row">
+                        <img style="width: 270px; padding: 10px;" src="/images/resources/legend.png" alt="legend"/>
+                    </div>
+                    <canvas id="bar" class="chart chart-bar" colours="colours" legend="false" series="series" data="data" labels="labels"></canvas>
+                    <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-2"><img class="img-circle championPerformance" ng-alt="{{champion1.name}}" ng-src="/images/champion/{{champion1.id}}.png"/></div>
+                        <div class="col-xs-2"><img class="img-circle championPerformance" ng-alt="{{champion2.name}}" ng-src="/images/champion/{{champion2.id}}.png"/></div>
+                        <div class="col-xs-2"><img class="img-circle championPerformance" ng-alt="{{champion3.name}}" ng-src="/images/champion/{{champion3.id}}.png"/></div>
+                        <div class="col-xs-2"><img class="img-circle championPerformance" ng-alt="{{champion4.name}}" ng-src="/images/champion/{{champion4.id}}.png"/></div>
+                        <div class="col-xs-2"><img class="img-circle championPerformance" ng-alt="{{champion5.name}}" ng-src="/images/champion/{{champion5.id}}.png"/></div>
+                        <div class="col-xs-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="rankedHistoryChampionController" class="col-xs-12 col-md-12 col-lg-6">
+            <div class="panel panel-default">
+                <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                <div ng-show="data" class="panel-body">
+                    <p class="muted-text-color">Recent History</p>
+                    <ul class="list-group">
+                        <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                        <li ng-show="data" ng-repeat="data in data | orderBy:'-matchCreation' | limitTo:7"  class="list-group-item list{{data.stats.winner}} list-group-win history-container">
+                            <div class="row">
+                                <div class="col-xs-2 col-md-1 col-lg-2">
+                                    {{data.champion}}
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-lg-3">
+                                    Date: {{data.matchCreation | date}}
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-lg-3">
+                                    Duration: {{data.matchDuration | secondsToDateTime | date:'mm:ss'}}
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-lg-3">
+                                    Lane: {{data.lane | lowercase}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-1 col-lg-2">
+                                    <img ng-src="images/champion/{{data.championId}}.png" ng-alt="{{data.champion}}" class="img-circle history-profile">
+                                </div>
+                                <div class="col-xs-1 col-md-1 col-lg-1">
+                                    <div class="row">
+                                        <img ng-src="images/spell/{{data.spell1Id}}.png" alt="..." class="img-rounded history-spell">
+                                    </div>
+                                    <div class="row">
+                                        <img ng-src="images/spell/{{data.spell2Id}}.png" alt="..." class="img-rounded history-spell">
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-md-2 col-lg-2">
+                                    <div class="row">
+                                        K: {{data.stats.kills}} D: {{data.stats.deaths}} A: {{data.stats.assists}}
+                                    </div>
+                                    <div ng-if="data.stats.deaths > 0" class="row">
+                                        <span class="label label-primary">KDA: {{(data.stats.kills + data.stats.assists) / data.stats.deaths | number:1}}</span>
+                                    </div>
+                                    <div ng-if="data.stats.deaths === 0" class="row">
+                                        <span class="label label-primary">KDA: {{data.stats.kills + data.stats.assists | number:1}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-md-3 col-lg-4">
+                                    <div class="row">
+                                        <img ng-src="images/item/{{data.items[0]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[1]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[2]}}.png" class="img-rounded history-item">
+                                    </div>
+                                    <div class="row">
+                                        <img ng-src="images/item/{{data.items[3]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[4]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[5]}}.png" class="img-rounded history-item">
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 col-md-1 col-lg-1">
+                                    <div class="row">
+                                        <p>Trinket</p>
+                                    </div>
+                                    <div class="row">
+                                        <img ng-src="images/item/{{data.items[6]}}.png" class="img-rounded history-item">
+                                    </div>
+                                </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div><!--/.row-->
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="color: grey; text-align: center;">
+            BlueBaron.net isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+            officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks
+            or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+        </div>
+    </div>
+</div>
+
+
+

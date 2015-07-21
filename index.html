@@ -1,0 +1,185 @@
+<!doctype html>
+<html class="no-js" ng-app="angularApp">
+<head>
+    <meta charset="utf-8">
+    <title>BlueBaron: LoL Summoner Profile, Metrics, and Insight Platform</title>
+    <meta name="description" content="BlueBaron.net is the most comprehensive League of Legends player profile tool, offering in depth information and insight in a sleek and intuitive interface.">
+    <meta name="keywords" content="league of legends,lol,champion strategy,summoner stats,lol summoners,top summoners,best champions">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=0.5">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,900,400italic,100,300,700,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="bower_components/ngtoast/dist/ngToast.min.css">
+    <link rel="stylesheet" href="bower_components/ngtoast/dist/ngToast-animations.min.css">
+    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+
+
+
+</head>
+  <body ng-cloak>
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <div class="wrapper">
+    <div id="main-nav" class="main-menu narrow-menu">
+      <img src="images/logo.png" id="logo" class="logo"/>
+        <p style="margin: 0 0 10px; width: 90px; text-align: center; color: #fff;">Alpha</p>
+      <ul id="nav-items" class="main-menu-nav" ng-controller="navCtrl">
+        <li>
+          <a data-toggle="modal" data-target="#myModal" ng-model="my.favorite" data-toggle="popover" title="Summoner Search" data-html="true" data-content='' id="nav-search"  class="spoticon-search-32 standard-menu-item modal-trigger">
+            <div class="fa fa-search glyph-thin-icon"></div>
+            <span class="nav-text">Search</span>
+          </a>
+
+        </li>
+        <li class="ng-cloak" ng-repeat="item in navItems" ng-show="checkIfUser()">
+          <a ng-href="{{item.ngHref}}{{param}}{{param2}}" id="{{item.id}}" class="{{item.cls + ' ' + item.active}} navItems">
+            <div class="{{item.iconClasses}}"></div>
+            <span class="nav-text">{{item.navText}}</span>
+          </a>
+        </li>
+        <li><a ng-href="#/about{{param}}{{param2}}" id="nav-legal" class="main-menu.narrow-menu item-profile navItems" ><span class="nav-text"><i class="fa fa-cog"></i></span></a>
+        </li>
+
+      </ul>
+    </div>
+
+  <!-- Modal -->
+  <div  class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div ng-controller="modalSearch" class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Summoner Search</h4>
+              </div>
+              <div class="modal-body modal-search">
+                  <input ng-model="my.userName" id="summonerName" type="text" class="form-control modal-username" placeholder="Summoner Name"/></input>
+                  <select ng-model="my.region" class="form-control search-select">
+                      <option value="">Choose Region</option>
+                      <option  ng-repeat="region in regions">{{region}}</option>
+                  </select>
+              </div>
+
+              <div class="modal-footer">
+                  <button ng-click="update(my)" data-dismiss="modal" type="button" class="search-player btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span> Search</button>
+                  <button type="button" data-dismiss="modal" class="search-player btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+                  <div style="clear: both;"></div>
+                  <hr style="margin-bottom: 5px;"/>
+                  <div style="padding-top: 5px;" class="modal-body" ng-controller="recentSearchController" >
+                      <div ng-repeat="item in items">
+                          <a style="font-size: 15px; color: #dfe0e6;" class="recentSearchLinks" ng-click="search('{{item.url}}')" ng-href="{{item.url}}">{{item.name}}</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div id="main">
+
+      <div >
+            <div class="ng-cloak" ng-show="showLoader"><h1><i class="fa fa-cog fa-spin"></i> Loading Summoner...</h1></div>
+          <toast></toast>
+            <div  ng-view=""></div>
+      </div>
+
+  </div>
+
+  <div id="wide-menu">
+      <div ng-controller="sideProfileController">
+        <img ng-src="/images/leagueicons/{{data.tier | lowercase}}_{{division}}.png" />
+        <div id="accountName">{{name.summoner}}</div>
+        <div id="accountLeague">{{data.tier}} {{data.division}}</div>
+        <div id="leagueName">{{data.name}}</div>
+      </div>
+      <div ng-controller="updateButtonController">
+          <button class="btn btn-primary" ng-click="updateSummoner()"><i ng-if="refreshing == true" class='fa fa-cog fa-spin'></i> Refresh</button>
+      </div>
+
+
+
+      <div id="wide-menu-ad">
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- wide-sidebar -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:210px;height:420px"
+               data-ad-client="ca-pub-3563115547943391"
+               data-ad-slot="5539371692"></ins>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+
+          <script type="text/javascript">
+              var adblock = true;
+          </script>
+          <script type="text/javascript" src="/adframe.js"></script>
+          <script type="text/javascript">
+              if(adblock) {
+                  //adblock is installed and enabled on this site :-D
+                  console.log("adblock is installed");
+              }
+          </script>
+      </div>
+  </div>
+
+</div>
+     <!--Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+    !function (A, n, g, u, l, a, r) {
+      A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+        (A[l].q = A[l].q || []).push(arguments)
+      }, A[l].l = +new Date, a = n.createElement(g),
+              r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+    }(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-58865201-1');
+    ga('send', 'pageview');
+
+
+  </script>
+
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/Chart.js/Chart.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+  <script src="bower_components/ngtoast/dist/ngToast.min.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="app/app.js"></script>
+  <script src="app/overview/overview.js"></script>
+  <script src="app/metrics/metrics.js"></script>
+  <script src="app/league/league.js"></script>
+  <script src="app/history/history.js"></script>
+  <script src="app/rm/rm.js"></script>
+  <script src="app/twitch/twitch.js"></script>
+  <script src="app/static.js"></script>
+  <script src="app/about/about.js"></script>
+  <script src='https://platform.venmo.com/sdk.js'></script>
+  <!-- endbuild -->
+  </body>
+</html>

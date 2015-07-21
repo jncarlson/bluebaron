@@ -1,0 +1,977 @@
+<div ng-controller="graphToShow" class="in-container">
+    <h1>Metrics</h1>
+
+    <div class="row" style="color: white; text-align: center">
+        <div class="col-xs-12">
+            <div ng-controller="metricsController" class="panel panel-default" style="color: rgb(215, 215, 216);">
+                <div class="panel-body">
+                    <p>Averages are now up to date!</p>
+                    <div ng-show="data.TOP" id="toprole11" class="tabSelect1" style="display: none;">
+                        <h2>
+                            Top Lane
+                        </h2>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Strengths</p>
+                            <p>
+                                <span ng-show="data.TOP.creepsPerMinDeltas.tenToTwenty > ideal.top.csPerMin" class="label label-primary ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.TOP.stats.wardsPlacedPerMin > ideal.top.avgWardsplaced" class="label label-primary ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.TOP.goldPerMinDeltas.tenToTwenty + data.TOP.goldPerMinDeltas.thirtyToEnd + data.TOP.goldPerMinDeltas.twentyToThirty + data.TOP.goldPerMinDeltas.zeroToTen) / 4 > ideal.top.goldPerMinPerGame" class="label label-primary ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.TOP.xpPerMinDeltas.tenToTwenty + data.TOP.xpPerMinDeltas.thirtyToEnd + data.TOP.xpPerMinDeltas.twentyToThirty + data.TOP.xpPerMinDeltas.zeroToTen) / 4 > ideal.top.expPerMinPerGame" class="label label-primary ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.TOP.stats.kills + data.TOP.stats.assists) / data.TOP.stats.deaths > 3" class="label label-primary ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.TOP.csDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.TOP.xpDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.TOP.creepsPerMinDeltas.tenToTwenty > ideal.top.csPerMin">
+                                    You're above average of your tier for creep score in the laning phase of the game!
+                                </li>
+                                <li ng-show="data.TOP.stats.wardsPlacedPerMin > ideal.top.avgWardsplaced">
+                                    You're above average of your tier for placing wards during games, keep up the good work!
+                                </li>
+                                <li ng-show="(data.TOP.goldPerMinDeltas.tenToTwenty + data.TOP.goldPerMinDeltas.thirtyToEnd + data.TOP.goldPerMinDeltas.twentyToThirty + data.TOP.goldPerMinDeltas.zeroToTen) / 4 > ideal.top.goldPerMinPerGame">
+                                    You earn more gold per minute than other top laners in your tier!
+                                </li>
+                                <li ng-show="(data.TOP.xpPerMinDeltas.tenToTwenty + data.TOP.xpPerMinDeltas.thirtyToEnd + data.TOP.xpPerMinDeltas.twentyToThirty + data.TOP.xpPerMinDeltas.zeroToTen) / 4 > ideal.top.expPerMinPerGame">
+                                    You gain more experience per minute than other top laners in your tier!
+                                </li>
+                                <li ng-show="(data.TOP.stats.kills + data.TOP.stats.assists) / data.TOP.stats.deaths > 3">
+                                    You're KDA is above 3 for top lane.
+                                </li>
+                                <li ng-show="data.TOP.csDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are getting a better CS score than your lane opponent in the laning phase.
+                                </li>
+                                <li ng-show="data.TOP.xpDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are gaining more experience per minute than your lane opponent in the laning phase.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Weaknesses</p>
+                            <p>
+                                <span ng-show="data.TOP.creepsPerMinDeltas.tenToTwenty < ideal.top.csPerMin" class="label label-danger ng-binding">
+                                    Laning Creep Score
+                                </span>
+                                <span ng-show="data.TOP.stats.wardsPlacedPerMin < ideal.top.avgWardsplaced" class="label label-danger ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.TOP.goldPerMinDeltas.tenToTwenty + data.TOP.goldPerMinDeltas.thirtyToEnd + data.TOP.goldPerMinDeltas.twentyToThirty + data.TOP.goldPerMinDeltas.zeroToTen) / 4 < ideal.top.goldPerMinPerGame" class="label label-danger ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.TOP.xpPerMinDeltas.tenToTwenty + data.TOP.xpPerMinDeltas.thirtyToEnd + data.TOP.xpPerMinDeltas.twentyToThirty + data.TOP.xpPerMinDeltas.zeroToTen) / 4 < ideal.top.expPerMinPerGame" class="label label-danger ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.TOP.stats.kills + data.TOP.stats.assists) / data.TOP.stats.deaths < 3" class="label label-danger ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.TOP.csDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.TOP.xpDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.TOP.creepsPerMinDeltas.tenToTwenty < ideal.top.csPerMin">
+                                    You are below the average of your tier in creep score for the laning phase. Consider seeking
+                                    advice on last hitting minions, freezing lane, and other methods to increase you're cs score.
+                                </li>
+                                <li ng-show="data.TOP.stats.wardsPlacedPerMin < ideal.top.avgWardsplaced">
+                                    You are below the average of your tier for placing wards. Consider seeking advice on when to buy wards
+                                    and where to place them.
+                                </li>
+                                <li ng-show="(data.TOP.goldPerMinDeltas.tenToTwenty + data.TOP.goldPerMinDeltas.thirtyToEnd + data.TOP.goldPerMinDeltas.twentyToThirty + data.TOP.goldPerMinDeltas.zeroToTen) / 4 < ideal.top.goldPerMinPerGame">
+                                    On average you earn less gold per minute than other top laners in your tier. This can be the result of many things like not effectively using farm time
+                                    or not getting many kills. Use other metrics to try and determine what could be causing you to not earn enough gold.
+                                </li>
+                                <li ng-show="(data.TOP.xpPerMinDeltas.tenToTwenty + data.TOP.xpPerMinDeltas.thirtyToEnd + data.TOP.xpPerMinDeltas.twentyToThirty + data.TOP.xpPerMinDeltas.zeroToTen) / 4 < ideal.top.expPerMinPerGame">
+                                    You aren't earning as much experience per minute as other top laners in your tier. Make sure you are using enough sustain to be able in
+                                    as much as you're opponent.
+                                </li>
+                                <li ng-show="(data.TOP.stats.kills + data.TOP.stats.assists) / data.TOP.stats.deaths < 3">
+                                    You're KDA is below 3 for top lane. Seek advice on playing more conservatively and dying less.
+                                </li>
+                                <li ng-show="data.TOP.csDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you're lane opponent has a better CS score than you during the laning phase. Seek advice on controlling the laning phase by zoning the enemy,
+                                    last hitting, and freezing waves.
+                                </li>
+                                <li ng-show="data.TOP.xpDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you are gaining less experience per minute than your lane opponent in the laning phase. This is usually due to making more frequent trips
+                                    to the fountain, having more deaths, or being zoned out by your opponent.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-show="data.JUNGLE" id="junglerole11" class="tabSelect1" style="display: none;">
+                        <h2>
+                            Jungle
+                        </h2>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Strengths</p>
+                            <p>
+                                <span ng-show="data.JUNGLE.creepsPerMinDeltas.tenToTwenty > ideal.top.csPerMin" class="label label-primary ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.JUNGLE.stats.wardsPlacedPerMin > ideal.top.avgWardsplaced" class="label label-primary ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.JUNGLE.goldPerMinDeltas.tenToTwenty + data.JUNGLE.goldPerMinDeltas.thirtyToEnd + data.JUNGLE.goldPerMinDeltas.twentyToThirty + data.JUNGLE.goldPerMinDeltas.zeroToTen) / 4 > ideal.jungle.goldPerMinPerGame" class="label label-primary ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.JUNGLE.xpPerMinDeltas.tenToTwenty + data.JUNGLE.xpPerMinDeltas.thirtyToEnd + data.JUNGLE.xpPerMinDeltas.twentyToThirty + data.JUNGLE.xpPerMinDeltas.zeroToTen) / 4 > ideal.jungle.expPerMinPerGame" class="label label-primary ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.JUNGLE.stats.kills + data.JUNGLE.stats.assists) / data.JUNGLE.stats.deaths > 3" class="label label-primary ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.JUNGLE.csDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.JUNGLE.xpDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.JUNGLE.creepsPerMinDeltas.tenToTwenty > ideal.jungle.csPerMin">
+                                    You're above average of your tier for creep score in the laning phase of the game!
+                                </li>
+                                <li ng-show="data.JUNGLE.stats.wardsPlacedPerMin > ideal.jungle.avgWardsplaced">
+                                    You're above average of your tier for placing wards during games, keep up the good work!
+                                </li>
+                                <li ng-show="(data.JUNGLE.goldPerMinDeltas.tenToTwenty + data.JUNGLE.goldPerMinDeltas.thirtyToEnd + data.JUNGLE.goldPerMinDeltas.twentyToThirty + data.JUNGLE.goldPerMinDeltas.zeroToTen) / 4 > ideal.jungle.goldPerMinPerGame">
+                                    You earn more gold per minute than other junglers in your tier!
+                                </li>
+                                <li ng-show="(data.JUNGLE.xpPerMinDeltas.tenToTwenty + data.JUNGLE.xpPerMinDeltas.thirtyToEnd + data.JUNGLE.xpPerMinDeltas.twentyToThirty + data.JUNGLE.xpPerMinDeltas.zeroToTen) / 4 > ideal.jungle.expPerMinPerGame">
+                                    You gain more experience per minute than other junglers in your tier!
+                                </li>
+                                <li ng-show="(data.JUNGLE.stats.kills + data.JUNGLE.stats.assists) / data.JUNGLE.stats.deaths > 3">
+                                    You're KDA as a jungler is above 3!
+                                </li>
+                                <li ng-show="data.JUNGLE.csDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are getting a better CS score than your jungle opponent in the laning phase.
+                                </li>
+                                <li ng-show="data.JUNGLE.xpDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are gaining more experience per minute than your jungle opponent in the laning phase.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Weaknesses</p>
+                            <p>
+                                <span ng-show="data.JUNGLE.creepsPerMinDeltas.tenToTwenty < ideal.top.csPerMin" class="label label-danger ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.JUNGLE.stats.wardsPlacedPerMin < ideal.top.avgWardsplaced" class="label label-danger ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.JUNGLE.goldPerMinDeltas.tenToTwenty + data.JUNGLE.goldPerMinDeltas.thirtyToEnd + data.JUNGLE.goldPerMinDeltas.twentyToThirty + data.JUNGLE.goldPerMinDeltas.zeroToTen) / 4 < ideal.jungle.goldPerMinPerGame" class="label label-danger ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.JUNGLE.xpPerMinDeltas.tenToTwenty + data.JUNGLE.xpPerMinDeltas.thirtyToEnd + data.JUNGLE.xpPerMinDeltas.twentyToThirty + data.JUNGLE.xpPerMinDeltas.zeroToTen) / 4 < ideal.jungle.expPerMinPerGame" class="label label-danger ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.JUNGLE.stats.kills + data.JUNGLE.stats.assists) / data.JUNGLE.stats.deaths < 3" class="label label-danger ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.JUNGLE.csDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.JUNGLE.xpDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.JUNGLE.creepsPerMinDeltas.tenToTwenty < ideal.jungle.csPerMin">
+                                    You are below the average of your tier for you jungle minion kills.
+                                </li>
+                                <li ng-show="data.JUNGLE.stats.wardsPlacedPerMin < ideal.jungle.avgWardsplaced">
+                                    You are below the average of your tier for placing wards. Consider seeking advice on when to buy wards
+                                    and where to place them.
+                                </li>
+                                <li ng-show="(data.JUNGLE.goldPerMinDeltas.tenToTwenty + data.JUNGLE.goldPerMinDeltas.thirtyToEnd + data.JUNGLE.goldPerMinDeltas.twentyToThirty + data.JUNGLE.goldPerMinDeltas.zeroToTen) / 4 < ideal.jungle.goldPerMinPerGame">
+                                    On average you earn less gold per minute than other junglers in your tier.
+                                </li>
+                                <li ng-show="(data.JUNGLE.xpPerMinDeltas.tenToTwenty + data.JUNGLE.xpPerMinDeltas.thirtyToEnd + data.JUNGLE.xpPerMinDeltas.twentyToThirty + data.JUNGLE.xpPerMinDeltas.zeroToTen) / 4 < ideal.jungle.expPerMinPerGame">
+                                    You aren't earning as much experience per minute as other junglers in your tier. Look for methods in improving your sustain.
+                                </li>
+                                <li ng-show="(data.JUNGLE.stats.kills + data.JUNGLE.stats.assists) / data.JUNGLE.stats.deaths < 3">
+                                    You're jungle KDA is below 3. Seek advice on playing more conservatively and dying less.
+                                </li>
+                                <li ng-show="data.JUNGLE.csDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you're lane opponent has a better CS score than you during the laning phase. Seek advice on controlling the laning phase by zoning the enemy,
+                                    last hitting, and freezing waves.
+                                </li>
+                                <li ng-show="data.JUNGLE.xpDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you are gaining less experience per minute than your jungle opponent. This is usually due to making more frequent trips
+                                    to the fountain or having more deaths.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-show="data.MIDDLE" id="midrole11" class="tabSelect1" style="display: none;">
+                        <h2>
+                            Middle
+                        </h2>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Strengths</p>
+                            <p>
+                                <span ng-show="data.MIDDLE.creepsPerMinDeltas.tenToTwenty > ideal.top.csPerMin" class="label label-primary ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.MIDDLE.stats.wardsPlacedPerMin > ideal.top.avgWardsplaced" class="label label-primary ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.MIDDLE.goldPerMinDeltas.tenToTwenty + data.MIDDLE.goldPerMinDeltas.thirtyToEnd + data.MIDDLE.goldPerMinDeltas.twentyToThirty + data.MIDDLE.goldPerMinDeltas.zeroToTen) / 4 > ideal.mid.goldPerMinPerGame" class="label label-primary ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.MIDDLE.xpPerMinDeltas.tenToTwenty + data.MIDDLE.xpPerMinDeltas.thirtyToEnd + data.MIDDLE.xpPerMinDeltas.twentyToThirty + data.MIDDLE.xpPerMinDeltas.zeroToTen) / 4 > ideal.mid.expPerMinPerGame" class="label label-primary ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.MIDDLE.stats.kills + data.MIDDLE.stats.assists) / data.MIDDLE.stats.deaths > 3" class="label label-primary ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.MIDDLE.csDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.MIDDLE.xpDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.MIDDLE.creepsPerMinDeltas.tenToTwenty > ideal.mid.csPerMin">
+                                    You're above average of your tier for creep score in the laning phase of the game!
+                                </li>
+                                <li ng-show="data.MIDDLE.stats.wardsPlacedPerMin > ideal.mid.avgWardsplaced">
+                                    You're above average of your tier for placing wards during games, keep up the good work!
+                                </li>
+                                <li ng-show="(data.MIDDLE.goldPerMinDeltas.tenToTwenty + data.MIDDLE.goldPerMinDeltas.thirtyToEnd + data.MIDDLE.goldPerMinDeltas.twentyToThirty + data.MIDDLE.goldPerMinDeltas.zeroToTen) / 4 > ideal.mid.goldPerMinPerGame">
+                                    You earn more gold per minute than other middle laners in your tier!
+                                </li>
+                                <li ng-show="(data.MIDDLE.xpPerMinDeltas.tenToTwenty + data.MIDDLE.xpPerMinDeltas.thirtyToEnd + data.MIDDLE.xpPerMinDeltas.twentyToThirty + data.MIDDLE.xpPerMinDeltas.zeroToTen) / 4 > ideal.middle.expPerMinPerGame">
+                                    You gain more experience per minute than other top laners in your tier!
+                                </li>
+                                <li ng-show="(data.MIDDLE.stats.kills + data.MIDDLE.stats.assists) / data.MIDDLE.stats.deaths > 3">
+                                    You're KDA is above 3 for top lane.
+                                </li>
+                                <li ng-show="data.MIDDLE.csDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are getting a better CS score than your lane opponent in the laning phase.
+                                </li>
+                                <li ng-show="data.MIDDLE.xpDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are gaining more experience per minute than your lane opponent in the laning phase.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Weaknesses</p>
+                            <p>
+                                <span ng-show="data.MIDDLE.creepsPerMinDeltas.tenToTwenty < ideal.top.csPerMin" class="label label-danger ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.MIDDLE.stats.wardsPlacedPerMin < ideal.top.avgWardsplaced" class="label label-danger ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.MIDDLE.goldPerMinDeltas.tenToTwenty + data.MIDDLE.goldPerMinDeltas.thirtyToEnd + data.MIDDLE.goldPerMinDeltas.twentyToThirty + data.MIDDLE.goldPerMinDeltas.zeroToTen) / 4 < ideal.mid.goldPerMinPerGame" class="label label-danger ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.MIDDLE.xpPerMinDeltas.tenToTwenty + data.MIDDLE.xpPerMinDeltas.thirtyToEnd + data.MIDDLE.xpPerMinDeltas.twentyToThirty + data.MIDDLE.xpPerMinDeltas.zeroToTen) / 4 < ideal.mid.expPerMinPerGame" class="label label-danger ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.MIDDLE.stats.kills + data.MIDDLE.stats.assists) / data.MIDDLE.stats.deaths < 3" class="label label-danger ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.MIDDLE.csDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.MIDDLE.xpDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.MIDDLE.creepsPerMinDeltas.tenToTwenty < ideal.mid.csPerMin">
+                                    You are below the average of your tier in creep score for the laning phase. Consider seeking
+                                    advice on last hitting minions, freezing lane, and other methods to increase you're cs score.
+                                </li>
+                                <li ng-show="data.MIDDLE.stats.wardsPlacedPerMin < ideal.mid.avgWardsplaced">
+                                    You are below the average of your tier for placing wards. Consider seeking advice on when to buy wards
+                                    and where to place them.
+                                </li>
+                                <li ng-show="(data.MIDDLE.goldPerMinDeltas.tenToTwenty + data.MIDDLE.goldPerMinDeltas.thirtyToEnd + data.MIDDLE.goldPerMinDeltas.twentyToThirty + data.MIDDLE.goldPerMinDeltas.zeroToTen) / 4 < ideal.mid.goldPerMinPerGame">
+                                    On average you earn less gold per minute than other top laners in your tier. This can be the result of many things like not effectively using farm time
+                                    or not getting many kills. Use other metrics to try and determine what could be causing you to not earn enough gold.
+                                </li>
+                                <li ng-show="(data.MIDDLE.xpPerMinDeltas.tenToTwenty + data.MIDDLE.xpPerMinDeltas.thirtyToEnd + data.MIDDLE.xpPerMinDeltas.twentyToThirty + data.MIDDLE.xpPerMinDeltas.zeroToTen) / 4 < ideal.mid.expPerMinPerGame">
+                                    You aren't earning as much experience per minute as other top laners in your tier. Make sure you are using enough sustain to be able in
+                                    as much as you're opponent.
+                                </li>
+                                <li ng-show="(data.MIDDLE.stats.kills + data.MIDDLE.stats.assists) / data.MIDDLE.stats.deaths < 3">
+                                    You're KDA is below 3 for MIDDLE lane. Seek advice on playing more conservatively and dying less.
+                                </li>
+                                <li ng-show="data.MIDDLE.csDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you're lane opponent has a better CS score than you during the laning phase. Seek advice on controlling the laning phase by zoning the enemy,
+                                    last hitting, and freezing waves.
+                                </li>
+                                <li ng-show="data.MIDDLE.xpDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you are gaining less experience per minute than your lane opponent in the laning phase. This is usually due to making more frequent trips
+                                    to the fountain, having more deaths, or being zoned out by your opponent.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-show="data.BOTTOM.DUO_CARRY" id="adcrole11" class="tabSelect1" style="display: none;">
+                        <h2>
+                            Attack Damage Carry
+                        </h2>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Strengths</p>
+                            <p>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.creepsPerMinDeltas.tenToTwenty > ideal.adc.csPerMin" class="label label-primary ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.stats.wardsPlacedPerMin > ideal.adc.avgWardsplaced" class="label label-primary ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_CARRY.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.zeroToTen) / 4 > ideal.adc.goldPerMinPerGame" class="label label-primary ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_CARRY.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.zeroToTen) / 4 > ideal.adc.expPerMinPerGame" class="label label-primary ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_CARRY.stats.kills + data.BOTTOM.DUO_CARRY.stats.assists) / data.BOTTOM.DUO_CARRY.stats.deaths > 3" class="label label-primary ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.csDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.xpDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.BOTTOM.DUO_CARRY.creepsPerMinDeltas.tenToTwenty > ideal.adc.csPerMin">
+                                    You're above average of your tier for creep score in the laning phase of the game!
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY.stats.wardsPlacedPerMin > ideal.adc.avgWardsplaced">
+                                    You're above average of your tier for placing wards during games, keep up the good work!
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_CARRY.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.zeroToTen) / 4 > ideal.adc.goldPerMinPerGame">
+                                    You earn more gold per minute than other ADC players in your tier!
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_CARRY.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.zeroToTen) / 4 > ideal.adc.expPerMinPerGame">
+                                    You gain more experience per minute than other ADC players in your tier!
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_CARRY.stats.kills + data.BOTTOM.DUO_CARRY.stats.assists) / data.BOTTOM.DUO_CARRY.stats.deaths > 3">
+                                    You're KDA is above 3 for ADC role.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY.csDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are getting a better CS score than your lane opponent in the laning phase.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY.xpDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are gaining more experience per minute than your lane opponent in the laning phase.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Weaknesses</p>
+                            <p>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.creepsPerMinDeltas.tenToTwenty < ideal.adc.csPerMin" class="label label-danger ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.stats.wardsPlacedPerMin < ideal.adc.avgWardsplaced" class="label label-danger ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_CARRY.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.zeroToTen) / 4 < ideal.adc.goldPerMinPerGame" class="label label-danger ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_CARRY.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.zeroToTen) / 4 < ideal.adc.expPerMinPerGame" class="label label-danger ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_CARRY.stats.kills + data.BOTTOM.DUO_CARRY.stats.assists) / data.BOTTOM.DUO_CARRY.stats.deaths < 3" class="label label-danger ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.csDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_CARRY.xpDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.BOTTOM.DUO_CARRY.creepsPerMinDeltas.tenToTwenty < ideal.adc.csPerMin">
+                                    You are below the average of your tier in creep score for the laning phase. Consider seeking
+                                    advice on last hitting minions, freezing lane, and other methods to increase you're cs score.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY.stats.wardsPlacedPerMin < ideal.adc.avgWardsplaced">
+                                    You are below the average of your tier for placing wards. Consider seeking advice on when to buy wards
+                                    and where to place them.
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_CARRY.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.zeroToTen) / 4 < ideal.adc.goldPerMinPerGame">
+                                    On average you earn less gold per minute than other ADC players in your tier. This can be the result of many things like not effectively using farm time
+                                    or not getting many kills. Use other metrics to try and determine what could be causing you to not earn enough gold.
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_CARRY.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.zeroToTen) / 4 < ideal.adc.expPerMinPerGame">
+                                    You aren't earning as much experience per minute as other ADC players in your tier. Make sure you are using enough sustain to be able in
+                                    as much as you're opponent.
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_CARRY.stats.kills + data.BOTTOM.DUO_CARRY.stats.assists) / data.BOTTOM.DUO_CARRY.stats.deaths < 3">
+                                    You're KDA is below 3 for ADC. Seek advice on playing more conservatively and dying less.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY.csDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you're lane opponent has a better CS score than you during the laning phase. Seek advice on controlling the laning phase by zoning the enemy,
+                                    last hitting, and freezing waves.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY.xpDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you are gaining less experience per minute than your lane opponent in the laning phase. This is usually due to making more frequent trips
+                                    to the fountain, having more deaths, or being zoned out by your opponent.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-show="data.BOTTOM.DUO_SUPPORT" id="supportrole11" class="tabSelect1" style="display: none;">
+                        <h2>
+                            Support
+                        </h2>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Strengths</p>
+                            <p>
+                            <span ng-show="data.BOTTOM.DUO_SUPPORT.creepsPerMinDeltas.tenToTwenty > ideal.support.csPerMin" class="label label-primary ng-binding">
+                            Laning Creep Score
+                            </span>
+                            <span ng-show="data.BOTTOM.DUO_SUPPORT.stats.wardsPlacedPerMin > ideal.support.avgWardsplaced" class="label label-primary ng-binding">
+                                Placing Wards
+                            </span>
+                            <span ng-show="(data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.zeroToTen) / 4 > ideal.support.goldPerMinPerGame" class="label label-primary ng-binding">
+                                Gold Earning
+                            </span>
+                            <span ng-show="(data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.zeroToTen) / 4 > ideal.support.expPerMinPerGame" class="label label-primary ng-binding">
+                                Experience Gain
+                            </span>
+                            <span ng-show="(data.BOTTOM.DUO_SUPPORT.stats.kills + data.BOTTOM.DUO_SUPPORT.stats.assists) / data.BOTTOM.DUO_SUPPORT.stats.deaths > 3" class="label label-primary ng-binding">
+                                Kill Death Assists
+                            </span>
+                            <span ng-show="data.BOTTOM.DUO_SUPPORT.csDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                CS vs Opponent
+                            </span>
+                            <span ng-show="data.BOTTOM.DUO_SUPPORT.xpDiffPerMinDeltas.tenToTwenty > 0" class="label label-primary ng-binding">
+                                XP vs Opponent
+                            </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.creepsPerMinDeltas.tenToTwenty > ideal.support.csPerMin">
+                                    You're above average of your tier for creep score in the laning phase of the game!
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.stats.wardsPlacedPerMin > ideal.support.avgWardsplaced">
+                                    You're above average of your tier for placing wards during games, keep up the good work!
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.zeroToTen) / 4 > ideal.support.goldPerMinPerGame">
+                                    You earn more gold per minute than other support players in your tier!
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.zeroToTen) / 4 > ideal.support.expPerMinPerGame">
+                                    You gain more experience per minute than other support players in your tier!
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_SUPPORT.stats.kills + data.BOTTOM.DUO_SUPPORT.stats.assists) / data.BOTTOM.DUO_SUPPORT.stats.deaths > 3">
+                                    You're support KDA is above 3!
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.csDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are getting a better CS score than your lane opponent in the laning phase.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.xpDiffPerMinDeltas.tenToTwenty > 0">
+                                    On average you are gaining more experience per minute than your lane opponent in the laning phase.
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <p class="subTitle">Weaknesses</p>
+                            <p>
+                                <span ng-show="data.BOTTOM.DUO_SUPPORT.creepsPerMinDeltas.tenToTwenty < ideal.top.csPerMin" class="label label-danger ng-binding">
+                                Laning Creep Score
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_SUPPORT.stats.wardsPlacedPerMin < ideal.top.avgWardsplaced" class="label label-danger ng-binding">
+                                    Placing Wards
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.zeroToTen) / 4 < ideal.support.goldPerMinPerGame" class="label label-danger ng-binding">
+                                    Gold Earning
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.zeroToTen) / 4 < ideal.support.expPerMinPerGame" class="label label-danger ng-binding">
+                                    Experience Gain
+                                </span>
+                                <span ng-show="(data.BOTTOM.DUO_SUPPORT.stats.kills + data.BOTTOM.DUO_SUPPORT.stats.assists) / data.BOTTOM.DUO_SUPPORT.stats.deaths < 3" class="label label-danger ng-binding">
+                                    Kill Death Assists
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_SUPPORT.csDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    CS vs Opponent
+                                </span>
+                                <span ng-show="data.BOTTOM.DUO_SUPPORT.xpDiffPerMinDeltas.tenToTwenty < 0" class="label label-danger ng-binding">
+                                    XP vs Opponent
+                                </span>
+                            </p>
+                            <ul style="text-align: left;">
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.creepsPerMinDeltas.tenToTwenty < ideal.support.csPerMin">
+                                    You are below the average of your tier in creep score for the laning phase. Consider seeking
+                                    advice on last hitting minions, freezing lane, and other methods to increase you're cs score.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.stats.wardsPlacedPerMin < ideal.support.avgWardsplaced">
+                                    You are below the average of your tier for placing wards. Consider seeking advice on when to buy wards
+                                    and where to place them.
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.zeroToTen) / 4 < ideal.support.goldPerMinPerGame">
+                                    On average you earn less gold per minute than other support players in your tier. This can be the result of many things like not effectively using farm time
+                                    or not getting many kills. Use other metrics to try and determine what could be causing you to not earn enough gold.
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.zeroToTen) / 4 < ideal.support.expPerMinPerGame">
+                                    You aren't earning as much experience per minute as other support players in your tier. Make sure you are using enough sustain to be able in
+                                    as much as you're opponent.
+                                </li>
+                                <li ng-show="(data.BOTTOM.DUO_SUPPORT.stats.kills + data.BOTTOM.DUO_SUPPORT.stats.assists) / data.BOTTOM.DUO_SUPPORT.stats.deaths < 3">
+                                    You're KDA is below 3 for support role. Seek advice on playing more conservatively and dying less.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.csDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you're lane opponent has a better CS score than you during the laning phase. Seek advice on controlling the laning phase by zoning the enemy,
+                                    last hitting, and freezing waves.
+                                </li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT.xpDiffPerMinDeltas.tenToTwenty < 0">
+                                    On average you are gaining less experience per minute than your lane opponent in the laning phase. This is usually due to making more frequent trips
+                                    to the fountain, having more deaths, or being zoned out by your opponent.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="color: white; text-align: center;">
+        <div ng-controller="metricsController" class="col-xs-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="muted-text-color">Per Role Metrics</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-8">
+                            <ul class="nav nav-pills nav-justified">
+                                <li ng-show="data.TOP"                id="topTab1" role="presentation" class="active tabSelect1"><a>TOP</a></li>
+                                <li ng-show="data.JUNGLE"             id="jungleTab1" role="presentation" class="tabSelect1"><a >JUNGLE</a></li>
+                                <li ng-show="data.MIDDLE"             id="midTab1" role="presentation" class="tabSelect1"><a >MID</a></li>
+                                <li ng-show="data.BOTTOM.DUO_CARRY"   id="adcTab1" role="presentation" class="tabSelect1"><a >ADC</a></li>
+                                <li ng-show="data.BOTTOM.DUO_SUPPORT" id="supportTab1" role="presentation" class="tabSelect1"><a >SUPPORT</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-lg-4" style="margin-top: 10px;">
+                            <select id="sortSelectProgressGraph" ng-model="tierPicker" ng-change="getIdeal()" class="form-control">
+                                <option style="display:none;" value="">Choose Tier</option>
+                                <option value="bronze">Bronze</option>
+                                <option value="silver">Silver</option>
+                                <option value="gold">Gold</option>
+                                <option value="platinum">Platinum</option>
+                                <option value="diamond">Diamond</option>
+                                <option value="master">Master</option>
+                                <option value="challenger">Challenger</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div ng-show="data.TOP" id="toprole1" class="panel panel-default table-panel tableMetrics1">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.TOP.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.top.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.TOP.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.top.avgWardsplaced}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.TOP.goldPerMinDeltas.tenToTwenty + data.TOP.goldPerMinDeltas.thirtyToEnd + data.TOP.goldPerMinDeltas.twentyToThirty + data.TOP.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.top.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.TOP.xpPerMinDeltas.tenToTwenty + data.TOP.xpPerMinDeltas.thirtyToEnd + data.TOP.xpPerMinDeltas.twentyToThirty + data.TOP.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.top.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.TOP.stats.kills + data.TOP.stats.assists) / data.TOP.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.TOP.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.TOP.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.MIDDLE" style="display: none;" id="midrole1" class="panel panel-default table-panel tableMetrics1">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.MIDDLE.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.mid.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.MIDDLE.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.mid.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.MIDDLE.goldPerMinDeltas.tenToTwenty + data.MIDDLE.goldPerMinDeltas.thirtyToEnd + data.MIDDLE.goldPerMinDeltas.twentyToThirty + data.MIDDLE.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.mid.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.MIDDLE.xpPerMinDeltas.tenToTwenty + data.MIDDLE.xpPerMinDeltas.thirtyToEnd + data.MIDDLE.xpPerMinDeltas.twentyToThirty + data.MIDDLE.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.mid.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.MIDDLE.stats.kills + data.MIDDLE.stats.assists) / data.MIDDLE.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.MIDDLE.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.MIDDLE.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.JUNGLE" style="display: none;" id="junglerole1" class="panel panel-default table-panel tableMetrics1">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.JUNGLE.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.jungle.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.JUNGLE.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.jungle.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.JUNGLE.goldPerMinDeltas.tenToTwenty + data.JUNGLE.goldPerMinDeltas.thirtyToEnd + data.JUNGLE.goldPerMinDeltas.twentyToThirty + data.JUNGLE.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.jungle.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.JUNGLE.xpPerMinDeltas.tenToTwenty + data.JUNGLE.xpPerMinDeltas.thirtyToEnd + data.JUNGLE.xpPerMinDeltas.twentyToThirty + data.JUNGLE.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.jungle.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.JUNGLE.stats.kills + data.JUNGLE.stats.assists) / data.JUNGLE.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.JUNGLE.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.JUNGLE.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.BOTTOM.DUO_CARRY" style="display: none;" id="adcrole1" class="panel panel-default table-panel tableMetrics1">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.adc.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.adc.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_CARRY.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.adc.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_CARRY.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_CARRY.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.adc.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.BOTTOM.DUO_CARRY.stats.kills + data.BOTTOM.DUO_CARRY.stats.assists) / data.BOTTOM.DUO_CARRY.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.BOTTOM.DUO_CARRY.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+                    <div ng-show="data.BOTTOM.DUO_SUPPORT" style="display: none;" id="supportrole1" class="panel panel-default table-panel tableMetrics1">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Actual</th>
+                                <th>Average</th>
+                            </tr>
+                            <tr>
+                                <td>Creeps Per Minute (laning phase)</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.creepsPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>{{ideal.support.csPerMin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Wards Placed Per minute:</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.stats.wardsPlacedPerMin | number:2}}</td>
+                                <td>{{ideal.support.avgWardsplaced}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gold per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.goldPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.support.goldPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>Exp per min per game:</td>
+                                <td>{{(data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.tenToTwenty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.thirtyToEnd + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.twentyToThirty + data.BOTTOM.DUO_SUPPORT.xpPerMinDeltas.zeroToTen) / 4 | number:2}}</td>
+                                <td>{{ideal.support.expPerMinPerGame}}</td>
+                            </tr>
+                            <tr>
+                                <td>KDA (Kills + Assists / Deaths):</td>
+                                <td>{{(data.BOTTOM.DUO_SUPPORT.stats.kills + data.BOTTOM.DUO_SUPPORT.stats.assists) / data.BOTTOM.DUO_SUPPORT.stats.deaths | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Creep Score Difference:</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.csDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>Experience Difference</td>
+                                <td>{{data.BOTTOM.DUO_SUPPORT.xpDiffPerMinDeltas.tenToTwenty | number:2}}</td>
+                                <td>N/A</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="panel panel-default">
+                <div ng-controller="metricsTeamController" class="panel-body">
+                    <p class="muted-text-color">Objective Metrics</p>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Actual</th>
+                            <th>Average</th>
+                        </tr>
+                        <tr>
+                            <td>Dragon Kills:</td>
+                            <td>{{data.dragonKills | number:2}}</td>
+                            <td>Not Available Yet</td>
+                        </tr>
+                        <tr>
+                            <td>First Baron:</td>
+                            <td>{{data.firstBaron | number:2}}</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td>First Dragon:</td>
+                            <td>{{data.firstDragon | number:2}}</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td>First Tower:</td>
+                            <td>{{data.firstTower | number:2}}</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td>Tower Kills:</td>
+                            <td>{{data.towerKills | number:2}}</td>
+                            <td>Not Available Yet</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="color: white; text-align: center;">
+        <div ng-controller="progressOverTimeController" class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <span class="glyphicon glyphicon-resize-full pull-right" ng-model="thisGraph" ng-click="showGraph('championBarChart')" style="padding: 10px; font-size: 16px;" aria-hidden="true"></span>
+                <div class="panel-body">
+                    <p>Champion Overall Performance</p>
+                    <canvas id="bar" class="chart chart-bar" colours="colours" legend="true" series="series" data="useThisChart" labels="labels" options="options"></canvas>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="killsController" class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <span class="glyphicon glyphicon-resize-full pull-right" ng-model="championBarChart" ng-click="showGraph('killsController')" style="padding: 10px; font-size: 16px;" aria-hidden="true"></span>
+                <div class="panel-body">
+                    <p>Kill Death Assist</p>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" data="useThisChart" options="options"  labels="labels" legend="true" series="series">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="metricsOverTimeLineController" class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <span class="glyphicon glyphicon-resize-full pull-right" ng-model="championBarChart" ng-click="showGraph('recentLineChart')" style="padding: 10px; font-size: 16px;" aria-hidden="true"></span>
+                <div class="panel-body">
+                    <p>Dynamic Champion Data</p>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" data="useThisChart" colours="colours"  options="options" labels="labels" legend="true" series="series">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row " style="color: white; text-align: center;">
+        <div ng-if="graphToShow === 'championBarChart'" ng-controller="progressOverTimeController" class="col-xs-12">
+            <div class="panel panel-default">
+                <span class="glyphicon glyphicon-resize-small pull-right" ng-model="thisGraph" ng-click="showGraph('none')" style="padding: 10px; font-size: 16px;" aria-hidden="true"></span>
+                <div class="panel-body">
+                    <p>Dynamic Champion Data</p>
+                    <canvas id="bar" class="chart chart-bar" colours="colours" legend="false"  data="useThisChart" labels="labels" options="options"></canvas>
+                    <div class="form-group">
+                        <select id="sortSelectChampionBar" ng-model="dataPicker" ng-change="selectedItemChanged()" class="form-control search-select">
+                            <option style="display:none;" value="">Choose Metric</option>
+                            <option value='{{championGameStats}}'>Win/Loss Performance</option>
+                            <option value="{{championKDA}}">KDA</option>
+                        </select>
+                    </div>
+                    <ul class="line-legend">
+                        <li><span style="background-color:#808080"></span>{{series[0]}}</li>
+                        <li><span style="background-color:#39939E"></span>{{series[1]}}</li>
+                        <li><span style="background-color:#B33030"></span>{{series[2]}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="graphToShow === 'recentLineChart'" ng-controller="metricsOverTimeLineController" class="col-xs-12"">
+            <div class="panel panel-default">
+                <span class="glyphicon glyphicon-resize-small pull-right" ng-model="thisGraph" ng-click="showGraph('none')" style="padding: 10px; font-size: 16px;" aria-hidden="true"></span>
+                <div class="panel-body">
+                    <p>Champion Overall Performance</p>
+                    <div class="panel-body">
+                        <div style="font-size: 12px;">
+                            Oldest <------------------------> Newest
+                        </div>
+                        <canvas id="line" class="chart chart-line" data="useThisChart" colours="colours" options="options" labels="labels" legend="false">
+                    </div>
+                    <div class="form-group">
+                        <select id="sortSelectProgressGraph" ng-model="dataPicker" ng-change="selectedItemChanged()" class="form-control search-select">
+                            <option style="display:none;" value="">Choose Metric</option>
+                            <option value="{{damageDealings}}">Damage Dealings</option>
+                            <option value="{{gameDuration}}">Game Duration</option>
+                            <option value="{{gameVisibility}}">Visibility</option>
+                            <option value="{{minionKills}}">Creep Score</option>
+                            <option value="{{goldEarned}}">Gold Earned</option>
+                            <option value="{{crowdControl}}">Heal & Crowd Control</option>
+                        </select>
+                    </div>
+
+                    <ul class="line-legend">
+                        <li><span style="background-color:rgba(30,136,229,1)"></span>{{series[0]}}</li>
+                        <li><span style="background-color:rgba(247,70,74,1)"></span>{{series[1]}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="graphToShow === 'killsController'" ng-controller="killsController" class="col-xs-12">
+            <div class="panel panel-default">
+                <span class="glyphicon glyphicon-resize-small pull-right" ng-model="thisGraph" ng-click="showGraph('none')" style="padding: 10px; font-size: 16px;" aria-hidden="true"></span>
+                <div class="panel-body">
+                    <p>Recent Game Kill/Death</p>
+                    <div class="panel-body">
+                        <div style="font-size: 12px;">
+                            Oldest <------------------------> Newest
+                        </div>
+                        <canvas id="line" class="chart chart-line" data="useThisChart"  options="options" labels="labels" legend="true" series="series">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="color: grey; text-align: center;">
+            BlueBaron.net isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+            officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks
+            or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+        </div>
+    </div>
+</div><!--/.in-container-->
+
+
+<style>
+    .label{
+        margin-top: 5px;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+</style>

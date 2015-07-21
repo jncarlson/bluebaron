@@ -1,0 +1,4 @@
+_host = localhost
+_username = root
+_password = root
+_database = bbangular

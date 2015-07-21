@@ -1,0 +1,90 @@
+<div class="in-container">
+    <h1>League</h1>
+    <div class="row">
+        <div ng-controller="leagueController" class="col-xs-12" >
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1  ng-hide="league"><i class='fa fa-cog fa-spin'></i></h1>
+                    <table ng-show="league" class="table table-striped dark-text-color leagueTable">
+                        <tr class="muted-text-color">
+                            <th>Summoner</th>
+                            <th>Emblems</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                            <th>Win %</th>
+                            <th>League Points</th>
+                        </tr>
+                        <tr ng-repeat="league in league" ng-if="league.miniSeries != NULL" class="grey-text-color">
+                            <div>
+                                <td ng-if="league.playerOrTeamId === player_id" class="text-left blue-table-text" style="font-size: 16px;">{{league.playerOrTeamName}}</td>
+                                <td ng-if="league.playerOrTeamId !== player_id" ng-controller="leaguePlayers" ng-click="update(league.playerOrTeamName);" class="text-left muted-text-color leagueNames"><i ng-if="showLoader" class='fa fa-cog fa-spin'></i> {{league.playerOrTeamName}}</td>
+                                <td class="text-center">
+                                    <span ng-if="(league.miniSeries.progress | limitTo: 1) === 'L'" class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitTo: 1) === 'W'" class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitTo: 1) === 'N'" class="glyphicon glyphicon-minus text-muted" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:1:2) === 'L'" class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:1:2) === 'W'" class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:1:2) === 'N'" class="glyphicon glyphicon-minus text-muted" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:2:3) === 'L'" class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:2:3) === 'W'" class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:2:3) === 'N'" class="glyphicon glyphicon-minus text-muted" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:3:4) === 'L'" class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:3:4) === 'W'" class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:3:4) === 'N'" class="glyphicon glyphicon-minus text-muted" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:4:5) === 'L'" class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:4:5) === 'W'" class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+                                    <span ng-if="(league.miniSeries.progress | limitFromTo:4:5) === 'N'" class="glyphicon glyphicon-minus text-muted" aria-hidden="true"></span>
+                                </td>
+
+                                <td class="text-center">{{league.wins}}</td>
+                                <td class="text-center">{{league.losses}}</td>
+                                <td class="text-center">{{league.wins / (league.wins + league.losses) * 100 | number:0}}%</td>
+                                <td class="text-center">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{league.leaguePoints}}%;">
+                                            <div>
+                                                {{league.leaguePoints}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </div>
+                        </tr>
+                        <tr ng-repeat="league in league | orderBy:'-leaguePoints'" ng-if="league.miniSeries == NULL" class="grey-text-color">
+                            <td ng-if="league.playerOrTeamId === player_id" class="text-left blue-table-text" style="font-size: 16px;">{{league.playerOrTeamName}}</td>
+                            <td ng-if="league.playerOrTeamId !== player_id" ng-controller="leaguePlayers" ng-click="update(league.playerOrTeamName);" class="text-left muted-text-color leagueNames"><i ng-if="showLoader" class='fa fa-cog fa-spin'></i> {{league.playerOrTeamName}}</td>
+                            <td class="text-center">
+                                <i ng-if="league.isVeteran" data-toggle="tooltip" data-placement="top" title="Veteran: This summoner has played over 100 games in this league." class="fa fa-trophy" tooltip></i>
+                                <i ng-if="league.isHotStreak" data-toggle="tooltip" data-placement="top" title="Hot Streak: This summoner has won 3 or more games in a row." class="fa fa-fire" tooltip></i>
+                                <i ng-if="league.isFreshBlood" data-placement="top" title="Fresh Blood: This summoner is new to this league." class="fa fa-plus" tooltip></i>
+                                <i ng-if="league.isInactive" data-placement="top" title="Inactive: This summoner is inactive." class="fa fa-frown-o" tooltip></i>
+                            </td>
+                            <td class="text-center">{{league.wins}}</td>
+                            <td class="text-center">{{league.losses}}</td>
+                            <td class="text-center">{{league.wins / (league.wins + league.losses) * 100 | number:0}}%</td>
+                            <td class="text-center">
+                                <div ng-if="tier !== 'CHALLENGER' && tier !== 'MASTER'" class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{league.leaguePoints}}%;">
+                                        <div ng-if="league.leaguePoints > 0">
+                                            {{league.leaguePoints}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="tier == 'CHALLENGER' || tier == 'MASTER'">
+                                    {{league.leaguePoints}}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="color: grey; text-align: center;">
+            BlueBaron.net isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+            officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks
+            or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+        </div>
+    </div>
+</div><!--/.in-container-->

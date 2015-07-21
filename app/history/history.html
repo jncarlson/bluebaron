@@ -1,0 +1,179 @@
+<div class="in-container">
+    <h1>History</h1>
+    <div class="row" style="color: white; text-align: center;">
+        <div ng-controller="rankedHistoryController" class="col-xs-12 col-md-12 col-lg-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="muted-text-color">Match History</p>
+                    <div ng-show="data" class="row">
+                        <form class="form-inline">
+                            <div  class="form-group">
+                                <input style="width: 200px;" ng-model="filterByThis" type="text" class="form-control" id="searchBy" placeholder="Filter by Champion">
+                            </div>
+                            <div class="form-group">
+                                <select id="sortSelect" ng-model="orderByThis" class="form-control search-select">
+                                    <option value="-matchCreation">Most Recent</option>
+                                    <option value="-matchDuration">Longest Duration</option>
+                                    <option value="-stats.kills">Kills</option>
+                                    <option value="-stats.deaths">Deaths</option>
+                                    <option value="-stats.assists">Assists</option>
+                                    <option value="-(stats.assists + stats.kills) / stats.deaths">KDA</option>
+                                    <option value="-stats.minionsKilled / matchDuration">Creep Per Minute</option>
+                                    <option value="-stats.wardsPlaced / matchDuration">Wards Per Minute</option>
+                                    <option value="-stats.neutralMinionsKilled">Jungle Minion Kills</option>
+                                    <option value="-stats.winner">Wins</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <br/>
+                    <ul class="list-group">
+                        <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                        <li ng-show="data" ng-repeat="data in data | orderBy:orderByThis | filter:filterByThis" style="padding-top: 5px; border-radius: 0px;" class="list-group-item list{{data.stats.winner}} list-group-win history-container">
+                            <div class="row">
+                                <div class="col-xs-2 col-md-1 col-lg-2">
+                                    {{data.champion}}
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-lg-3">
+                                    {{data.matchCreation | date}}
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-lg-3">
+                                    Duration: {{data.matchDuration | secondsToDateTime | date:'mm:ss'}}
+                                </div>
+                                <div class="col-xs-3 col-md-3 col-lg-3">
+                                    Lane: {{data.lane | lowercase}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-1 col-lg-2">
+                                    <img ng-src="images/champion/{{data.championId}}.png" ng-alt="{{data.champion}}" class="img-circle history-profile">
+                                </div>
+                                <div class="col-xs-1 col-md-1 col-lg-1">
+                                    <div class="row">
+                                        <img ng-src="images/spell/{{data.spell1Id}}.png" alt="..." class="img-rounded history-spell">
+                                    </div>
+                                    <div class="row">
+                                        <img ng-src="images/spell/{{data.spell2Id}}.png" alt="..." class="img-rounded history-spell">
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-md-2 col-lg-2">
+                                    <div class="row">
+                                        K: {{data.stats.kills}} D: {{data.stats.deaths}} A: {{data.stats.assists}}
+                                    </div>
+                                    <div ng-if="data.stats.deaths > 0" class="row">
+                                        <span class="label label-primary">KDA: {{(data.stats.kills + data.stats.assists) / data.stats.deaths | number:1}}</span>
+                                    </div>
+                                    <div ng-if="data.stats.deaths === 0" class="row">
+                                         <span class="label label-primary">KDA: {{data.stats.kills + data.stats.assists | number:1}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-md-3 col-lg-2">
+                                    <div class="row">
+                                        <img ng-src="images/item/{{data.items[0]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[1]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[2]}}.png" class="img-rounded history-item">
+                                    </div>
+                                    <div class="row">
+                                        <img ng-src="images/item/{{data.items[3]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[4]}}.png" class="img-rounded history-item">
+                                        <img ng-src="images/item/{{data.items[5]}}.png" class="img-rounded history-item">
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 col-md-1 col-lg-1">
+                                    <div class="row">
+                                        <p>Trinket</p>
+                                    </div>
+                                    <div class="row">
+                                        <img ng-src="images/item/{{data.items[6]}}.png" class="img-rounded history-item">
+                                    </div>
+                                </div>
+                                <div style="text-align:left;" class="col-xs-2 col-md-2 col-lg-2">
+                                    <div class="row">
+                                          WPM: {{data.stats.wardsPlaced / (data.matchDuration / 60) | number:2}}
+                                    </div>
+                                    <div class="row">
+                                        NMK: {{data.stats.neutralMinionsKilled}}
+                                    </div>
+                                    <div class="row">
+                                        Enemy Jungle: {{data.stats.neutralMinionsKilledEnemyJungle}}
+                                    </div>
+                                </div>
+                                <div style="text-align:left;" class="col-xs-2 col-md-2 col-lg-2">
+                                    <div class="row">
+                                        CPM: {{data.stats.minionsKilled / (data.matchDuration / 60) | number:2}}
+                                    </div>
+                                    <div class="row">
+                                        Wards K: {{data.stats.wardsKilled}}
+                                    </div>
+                                    <div class="row">
+                                        Your Jungle: {{data.stats.neutralMinionsKilledTeamJungle}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-5">
+            <div ng-controller="rankedChampionController" class="panel panel-default">
+                <div class="panel-body">
+                    <p class="muted-text-color">Champion Data</p>
+                    <div ng-show="data" class="row">
+                        <form class="form-inline">
+                            <div  class="form-group">
+                                <input style="width: 200px;" ng-model="filterByThis" type="text" class="form-control" id="searchByThis" placeholder="Filter by Champion">
+                            </div>
+                            <div class="form-group">
+                                <select id="sortSelect" ng-model="orderByThis" class="form-control search-select">
+                                    <option value="-stats.totalSessionsPlayed">Most Games</option>
+                                    <option value="-(stats.totalSessionsWon / stats.totalSessionsPlayed)">Best Performance</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="sortSelect" ng-model="limitByThis" class="form-control search-select">
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="150">Show All</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <h1  ng-hide="data"><i class='fa fa-cog fa-spin'></i></h1>
+                    <br/>
+                    <ul ng-show="data" class="list-group">
+                        <li  ng-repeat="data in data | orderBy:[orderByThis, '-stats.totalSessionsWon'] | limitTo:limitByThis | filter:filterByThis"  class="list-group-item history-container">
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2 col-lg-2">
+                                    <img style="width: 50px;" ng-src="/images/champion/{{data.id}}.png" alt="..." class="img-rounded">
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{(data.stats.totalSessionsWon / data.stats.totalSessionsPlayed) * 100 | number:0}}" aria-valuemin="0" aria-valuemax="100" style="width: {{(data.stats.totalSessionsWon / data.stats.totalSessionsPlayed) * 100 | number:0}}%;">
+                                            <div ng-if="data.stats.totalSessionsWon > 0">
+                                                Wins: {{(data.stats.totalSessionsWon / data.stats.totalSessionsPlayed) * 100 | number:0}}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{data.name}} - Total: {{data.stats.totalSessionsPlayed}} Won: {{data.stats.totalSessionsWon}} Lost: {{data.stats.totalSessionsLost}}
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <span class="label label-default">CS: {{data.stats.totalMinionKills / data.stats.totalSessionsPlayed | number:0}}</span>
+                                    <span class="label label-default">KDA: {{(data.stats.totalAssists + data.stats.totalChampionKills) / data.stats.totalDeathsPerSession | number:2}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="color: grey; text-align: center;">
+            BlueBaron.net isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+            officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks
+            or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+        </div>
+    </div>
+</div><!--/.in-container-->
+

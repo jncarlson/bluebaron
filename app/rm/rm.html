@@ -1,0 +1,114 @@
+<div class="in-container">
+    <h1>Runes & Masteries</h1>
+    <div class="row" style="color: white; text-align: center; margin: 0px; min-width: 900px;">
+        <div ng-controller="runesController">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Runes Pages</h3>
+
+                    <button ng-repeat="page in runePages" ng-click="getPosition({{$index}})" type="button" class="btn btn-primary ng-click-active">{{page.name}}</button>
+
+                    <br/>
+
+                    <h4>{{active}}</h4>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div ng-repeat="thirty in thirty" style="font-size: 11px;"><strong>{{$index + 1}} </strong> {{tip[$index]['name']}}</div>
+                        </div>
+                        <div class="col-xs-7" style="width: 656px; height: 456px; position: relative; margin: 0 auto; padding-left: 0px;">
+                            <div ng-repeat="thirty in thirty" ng-if="x[$index]" tooltip data-placement="top" data-html="true"  title="<strong>{{tip[$index]['name']}}</strong> <br/> {{tip[$index]['description']}}" style="{{position[$index]}}" ><span style="font-size: 12px; font-weight: bold; margin-left: 10px;">{{$index + 1}}</span></div>
+                            <img src="../../images/runes/runeBackground.png" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/panel-->
+        </div><!--/ng-controller-->
+        <div ng-controller="masteryController">
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>Mastery Pages</h3>
+
+                    <button type="button" ng-repeat="mastery in masteries" ng-click="getActive({{$index}})" class="btn btn-primary ng-click-active">{{mastery.name}}</button>
+                    <br/>
+                    <h4>{{currentPageName}}</h4>
+
+                    <div id="mastery-1">
+                        <span ng-repeat="activeNumber in activePage" class="class-{{activeNumber.id}} mastery-placement mastery-level">{{activeNumber.rank}}</span>
+                        <img ng-repeat="activePage in activePage" tooltip data-placement="top" data-html="true" title="<strong>{{name[$index]}}</strong> <br/> {{description[$index]}}" ng-src="/images/mastery/{{activePage.id}}.png" style="z-index: 10;" class="class-{{activePage.id}} mastery-placement" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4111.png" class="class-4111 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4112.png" class="class-4112 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4113.png" class="class-4113 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4114.png" class="class-4114 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4121.png" class="class-4121 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4122.png" class="class-4122 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4123.png" class="class-4123 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4124.png" class="class-4124 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4131.png" class="class-4131 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4132.png" class="class-4132 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4133.png" class="class-4133 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4134.png" class="class-4134 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4141.png" class="class-4141 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4142.png" class="class-4142 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4143.png" class="class-4143 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4144.png" class="class-4144 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4151.png" class="class-4151 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4152.png" class="class-4152 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4154.png" class="class-4154 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4162.png" class="class-4162 mastery-placement master-non-active" alt=""/>
+
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4211.png" class="class-4211 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4212.png" class="class-4212 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4213.png" class="class-4213 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4214.png" class="class-4214 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4221.png" class="class-4221 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4222.png" class="class-4222 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4224.png" class="class-4224 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4231.png" class="class-4231 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4232.png" class="class-4232 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4233.png" class="class-4233 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4234.png" class="class-4234 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4241.png" class="class-4241 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4242.png" class="class-4242 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4243.png" class="class-4243 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4244.png" class="class-4244 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4251.png" class="class-4251 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4252.png" class="class-4252 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4253.png" class="class-4253 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4262.png" class="class-4262 mastery-placement master-non-active" alt=""/>
+
+
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4311.png" class="class-4311 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4312.png" class="class-4312 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4313.png" class="class-4313 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4314.png" class="class-4314 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4322.png" class="class-4322 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4324.png" class="class-4324 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4331.png" class="class-4331 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4332.png" class="class-4332 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4333.png" class="class-4333 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4334.png" class="class-4334 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4341.png" class="class-4341 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4342.png" class="class-4342 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4343.png" class="class-4343 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4344.png" class="class-4344 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4352.png" class="class-4352 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4353.png" class="class-4353 mastery-placement master-non-active" alt=""/>
+                        <img tooltip data-placement="top" data-html="true" ng-src="/images/mastery/4362.png" class="class-4362 mastery-placement master-non-active" alt=""/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="color: grey; text-align: center;">
+            BlueBaron.net isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone
+            officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks
+            or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+        </div>
+    </div>
+</div><!--/.in-container-->
